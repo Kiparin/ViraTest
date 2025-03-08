@@ -1,0 +1,45 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Vira.App.ViewModels"
+			 xmlns:model="clr-namespace:Vira.App.Core.Models;assembly=Vira.App.Core"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Vira.App.Views.MainView"
+             x:DataType="vm:MainViewModel">
+	<Design.DataContext>
+		<vm:MainViewModel />
+	</Design.DataContext>
+
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="4*" />
+		</Grid.ColumnDefinitions>
+
+		<TreeView Grid.Column="0"
+				  ItemsSource="{Binding Root}"
+				  SelectedItem="{Binding SelectDirectory}">
+			<TreeView.DataTemplates>
+				<TreeDataTemplate DataType="model:DirectoryItemModel"
+								  ItemsSource="{Binding Subdirectories}">
+					<TextBlock Text="{Binding Name}" />
+				</TreeDataTemplate>
+			</TreeView.DataTemplates>
+		</TreeView>
+		<DataGrid Grid.Column="1"
+				  ItemsSource="{Binding Files}"
+				  GridLinesVisibility="Horizontal"
+				  BorderBrush="Gray"
+				  IsReadOnly="True"
+				  AutoGenerateColumns="False">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Имя" Width="5*" Binding="{Binding Name}" />
+				<DataGridTextColumn Header="Размер" Width="2*" Binding="{Binding Size}" />
+				<DataGridTextColumn Header="Дата создания" Width="2*"  Binding="{Binding CreationDate}" />
+				<DataGridTextColumn Header="Дата изменения" Width="2*" Binding="{Binding ModificationDate}" />
+				<DataGridTextColumn Header="Атрибуты" Width="3*" Binding="{Binding Attributes}" />
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+</UserControl>

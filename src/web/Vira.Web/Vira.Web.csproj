@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+	<Target Name="CopyAppBundleToWwwroot" AfterTargets="Build">
+		<PropertyGroup>
+			<AppBundlePath>$(SolutionDir)src\app\Vira.App.Browser\bin\$(Configuration)\net8.0-browser\browser-wasm\AppBundle\_framework</AppBundlePath>
+			<WwwrootPath>$(SolutionDir)src\web\Vira.Web\wwwroot\_framework</WwwrootPath>
+		</PropertyGroup>
+
+		<Error Condition="!Exists('$(AppBundlePath)')" Text="Папка _framework не найдена: $(AppBundlePath)" />
+
+		<ItemGroup>
+			<AppBundleFiles Include="$(AppBundlePath)\**\*.*" />
+		</ItemGroup>
+
+		<Message Text="Копирование _framework в wwwroot..." Importance="high" />
+		<Copy SourceFiles="@(AppBundleFiles)" DestinationFiles="@(AppBundleFiles -> '$(WwwrootPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
+		<Message Text="Копирование завершено." Importance="high" />
+	</Target>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\domain\Vira.App.Core\Vira.App.Core.csproj" />
+	</ItemGroup>
+
+</Project>

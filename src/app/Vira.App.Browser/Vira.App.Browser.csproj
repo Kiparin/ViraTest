@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0-browser</TargetFramework>
+		<RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
+		<WasmMainJSPath>wwwroot\main.js</WasmMainJSPath>
+		<WasmRuntimeAssetsLocation>./_framework</WasmRuntimeAssetsLocation>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<WasmExtraFilesToDeploy Include="wwwroot\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Avalonia.Browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Vira.App\Vira.App.csproj" />
+	</ItemGroup>
+</Project>
